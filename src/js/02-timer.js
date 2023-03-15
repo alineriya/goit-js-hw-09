@@ -42,16 +42,22 @@ const timer = {
 
     
     this.isActive = true;
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       const currentTime = Date.now();
       const endTime = fp.selectedDates[0];
-      const deltaTime = endTime - currentTime;
-      const timeMeasure = convertMs(deltaTime);
-      // console.log(convertMs(deltaTime));
-      updateClockFace(timeMeasure);
+        const deltaTime = endTime - currentTime;
+        if (deltaTime >= 0) {
+            const timeMeasure = convertMs(deltaTime);
+            // console.log(convertMs(deltaTime));
+            updateClockFace(timeMeasure);
+        } return;
     }, 1000);
     dateSelectorEl.disabled = true;
     btnEl.disabled = true;
+    if (deltaTime === 0) {
+        clearInterval(this.intervalId);
+        return;
+    }
   },
 };
 
